@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import jwtDecode from 'jwt-decode';
+import sanitizeHtml from 'sanitize-html';
 
 import { AzureResourceTypes } from '../types';
 
@@ -17,7 +18,10 @@ export const removePlaceholder = (config: any) => {
   try {
     if (config) {
       let str = JSON.stringify(config);
-      str = str.replace(/<[^>]*>/g, '');
+      str = sanitizeHtml(str, {
+        allowedTags: [], // Remove all HTML tags
+        allowedAttributes: {} // Remove all attributes
+      });
       const newConfig = JSON.parse(str);
       return newConfig;
     } else {
