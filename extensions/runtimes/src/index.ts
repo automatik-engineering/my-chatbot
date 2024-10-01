@@ -28,8 +28,8 @@ const writeLocalFunctionsSetting = async (name: string, value: string, cwd: stri
   // only set if there is both a setting and a value.
   if (name && value && cwd) {
     // since these values could conceivably contain quote marks, make sure they are properly escaped
-    const escapedName = name.replace(/"/g, '\\"');
-    const escapedValue = value.replace(/"/g, '\\"');
+    const escapedName = name.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+    const escapedValue = value.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
     const command = `func settings add "${escapedName}" "${escapedValue}"`;
     log('EXEC: ', command);
     const { stderr: err } = await execAsync(command, { cwd: cwd });
