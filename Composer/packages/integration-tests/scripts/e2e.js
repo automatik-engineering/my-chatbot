@@ -8,7 +8,7 @@
 
 const path = require('path');
 const { promisify } = require('util');
-const { spawn, execSync } = require('child_process');
+const { spawn, execSync, execFileSync } = require('child_process');
 
 const fs = require('fs-extra');
 const chalk = require('chalk');
@@ -90,7 +90,7 @@ async function run() {
 }
 
 function cleanup() {
-  execSync(`node ${path.resolve(__dirname, 'clean-e2e.js')}`); // lgtm [js/shell-command-injection-from-environment]
+  execFileSync('node', [path.resolve(__dirname, 'clean-e2e.js')]); // lgtm [js/shell-command-injection-from-environment]
 }
 
 console.clear();
